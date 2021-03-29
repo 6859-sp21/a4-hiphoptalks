@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            <h1>Testing if D3 works</h1>
+            <p>This should be blue if D3 is working on this page.</p>
+        </div>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script>
+            var paragraphs = document.getElementsByTagName("p");
+            for (var i = 0; i < paragraphs.length; i++) {
+                var paragraph = paragraphs.item(i);
+                paragraph.style.setProperty("color", "blue", null);
+            }
+        </script>
+    </body>
+</html>
