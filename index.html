@@ -1,18 +1,173 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            input {border: 1px dotted #ccc; background: white; font-family: monospace; padding: 10px 20px; font-size: 18px; margin: 20px 10px 20px 0; color: red;}
+            input:focus { background-color:yellow; outline: none;}
+        </style>
     </head>
     <body>
         <div>
             <h1>Testing if D3 works</h1>
             <p>This should be blue if D3 is working on this page.</p>
         </div>
+        <form name="wordchoice" onkeyup="handleType()">
+            <input type="text" id="wordtype" placeholder="Type out a word&hellip;">
+        </form>
+        <div id="noword">This word is not one of the 1000 most used words in Hip Hop.</div>
+        <ul></ul>
+        <div id="viz"></div>
         <script src="https://d3js.org/d3.v6.min.js"></script>
         <script>
-            var paragraphs = document.getElementsByTagName("p");
-            for (var i = 0; i < paragraphs.length; i++) {
-                var paragraph = paragraphs.item(i);
-                paragraph.style.setProperty("color", "blue", null);
+            // Initialize the svg
+            let width = 1000;
+            let height = 500;
+            var svg = d3.select("#viz")
+                .append("svg")
+                .attr("viewBox", [0, 0, width, height]);
+
+            var rappers=[]; // in the form [rapper1, rapper2, rapper3 ...]
+            var rapWords={}; // in the form {word: {rapper1: count, rapper2: count ...} ...}
+            var rapperColors={}; // in the form {rapper1: blue, rapper2: red, ...}
+            var rapperCircles={}; // in the form {rapper1: [circle_svg], rapper2: [circle_svg_2], ...}
+
+            // Testing if d3 works
+            d3.selectAll("p").style("color", "blue");
+            d3.select("#noword")
+                .style("opacity", 0);
+
+            // Read through all the rappers data and create a circle for each rapper
+            d3.csv("rappers.csv", function(data) {
+                console.log(data["Rapper"], data);
+                let rapper = data["Rapper"];
+                rappers.push(rapper);
+                rapperColors[rapper] = data["Color"];
+            }).then(() => {
+                for (var i = 0; i < rappers.length; i++) {
+                    let rapper = rappers[i];
+                    let circle = svg.append("circle")
+                        .style("fill", "black")
+                        .attr("r", 10)
+                        .attr("cx", 30)
+                        .attr("cy", 100 + 40*i);
+                    circle.transition()
+                        .duration(1000)
+                        .attr("r", 15)
+                        .style("fill", rapperColors[rapper]);
+                    rapperCircles[rapper] = circle;
+                }
+                
+                // Read through all the words data
+                d3.csv("words.csv", function(data) {
+                    console.log(data["Word"], data);
+                    let word = data["Word"];
+                    rapWords[word] = {};
+                    for (var i = 0; i < rappers.length; i++) {
+                        let rapper = rappers[i];
+                        rapWords[word][rapper] = parseInt(data[rapper]);
+                    }
+                });
+            });
+
+            // Handle typing from user
+            var showNoWordsText = false;
+            function handleType(event){
+                let word = document.getElementById("wordtype").value;
+                if (word in rapWords) {
+                    console.log("This is one of the 1000 most popular words");
+                    updateCircles(word);
+                    if (showNoWordsText) {
+                        // Hide the no words available text
+                        d3.select("#noword")
+                            .transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                        showNoWordsText = false;
+                    }
+                } else {
+                    console.log("This is not one of the 1000 most popular words.");
+                    if (!showNoWordsText) {
+                        // Reset all the circles
+                        resetCircles();
+                        // Reveal the no words available text
+                        showNoWordsText = true;
+                        d3.select("#noword")
+                            .transition()
+                            .duration(1000)
+                            .style("opacity", 100);
+                    }
+                }
+            }
+
+            function updateCircles(word) {
+                // Get the max word count
+                let maxWordCount = 0;
+                for (var i = 0; i < rappers.length; i++) {
+                    let rapper = rappers[i];
+                    let rapperWordCount = rapWords[word][rapper];
+                    if (rapperWordCount > maxWordCount) maxWordCount = rapperWordCount;
+                }
+
+                // Initialize all bins
+                let numBins = Math.round(maxWordCount/40);
+                let rapperBins = {};
+                for (var i = 0; i <= numBins; i++) {
+                    console.log(i.toString());
+                    rapperBins[i.toString()] = [];
+                }
+
+                // Get projected x coordinates for rapper circles according to respective word count
+                // Bin rapper circles within the same x coordinate group (grouped by every 50 pixels)
+                let projectedX = {};
+                for (var i = 0; i < rappers.length; i++) {
+                    let rapper = rappers[i];
+                    let rapperWordCount = rapWords[word][rapper];
+                    projectedX[rapper] = 30 + 500*rapperWordCount/maxWordCount;
+                    console.log("The bin is ", Math.round(rapperWordCount/maxWordCount*numBins).toString(), " out of ", numBins);
+                    rapperBins[Math.round(rapperWordCount/maxWordCount*numBins).toString()].push(rapper);
+                }
+                    console.log(rapperBins);
+
+                // Move rapper circles along y coordinate to accomodate all circles in the bin
+                let projectedY = {};
+                for (var i = 0; i <= numBins; i++) {
+                    let rappersInBin = rapperBins[i];
+                    for (var j = 0; j < rappersInBin.length; j++) {
+                        let rapper = rappersInBin[j];
+                        console.log("calculating projected y for ", rapper);
+                        projectedY[rapper] = 100+40*(rappersInBin.length-1)/2-40*j;
+                    }
+                }
+                // Move rapper circles to new projected positions
+                for (var i = 0; i < rappers.length; i++) {
+                    let rapper = rappers[i];
+                    let rapperWordCount = rapWords[word][rapper];
+                    console.log(rapperWordCount, maxWordCount, projectedX[rapper], projectedY[rapper]);
+                    rapperCircles[rapper].transition()
+                        .duration(1500)
+                        .attr("cx", projectedX[rapper])
+                        .attr("cy", projectedY[rapper]);
+                }
+
+                // Move rapper circles according to their respective word counts
+                // for (var i = 0; i < rappers.length; i++) {
+                //     let rapper = rappers[i];
+                //     let rapperWordCount = rapWords[word][rapper];
+                //     console.log(rapperWordCount, maxWordCount);
+                //     rapperCircles[rapper].transition()
+                //         .duration(1500)
+                //         .attr("cx", 30 + 500*rapperWordCount/maxWordCount);
+                // }
+            }
+
+            function resetCircles() {
+                for (var i = 0; i < rappers.length; i++) {
+                    let rapper = rappers[i];
+                    rapperCircles[rapper].transition()
+                        .duration(1000)
+                        .attr("cy", 100+40*i)
+                        .attr("cx", 30);
+                }
             }
         </script>
     </body>
