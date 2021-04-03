@@ -24,4 +24,4 @@ with open("rappers.csv", "w") as file:
         img.save(os.getcwd() + "/artistsPictures/" + artist + "_resized.png", optimize = True, quality = 1)
 
         # Write image file names
-        writer.writerow([artist, "/artistsPictures/" + artist + "_resized.png"])
+        writer.writerow([artist, "/a4-hiphoptalks/artistsPictures/" + artist + "_resized.png"])
