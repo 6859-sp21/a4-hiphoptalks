@@ -40,9 +40,7 @@ for csv_file in csv_files:
                     artist_words.append(artist_json[word])
                 else:
                     artist_words.append(0)
-        all_artist_words.append(artist_words)
-
-artists = list(artists)
+            all_artist_words.append(artist_words)
 
 word_sums = {}
 max_word_count = 0
