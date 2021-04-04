@@ -8,8 +8,8 @@ extension = 'csv'
 os.chdir(path)
 csv_files = glob.glob('*.{}'.format(extension))
 
-artists=set()
-words=set()
+artists=[]
+words=[]
 all_artist_words=[]
 
 
@@ -20,21 +20,18 @@ for csv_file in csv_files:
             artist_string = row[1].replace("{\'", "{\"").replace(" \'", " \"").replace("\':", "\":").replace("\"\"", "\"").replace("\'","")
             artist_json = json.loads(artist_string)
             for word in artist_json.keys():
-                words.add(word)
-words = list(words)
+                if word in words: continue
+                words.append(word)
 
+artists = []
 for csv_file in csv_files:
     with open(csv_file, 'r') as file:
         reader = csv.reader(file)
-        i = 0
         for row in reader:
             artist = row[0]
             if artist == "Artist": break
-            
-            i += 1
-            if i == 2: break
-            
-            artists.add(artist)
+            if artist in artists: break
+            artists.append(artist)
             artist_string = row[1].replace("{\'", "{\"").replace(" \'", " \"").replace("\':", "\":").replace("\"\"", "\"").replace("\'","")
             artist_json = json.loads(artist_string)
             artist_words=[]
@@ -80,7 +77,7 @@ with open("words.csv", "w") as file:
     for i in range(len(words)):
         words_writer.writerow([words[i]] + all_word_artists[i])
 
-with open("rappers.csv", "w") as file:
+with open("rapper_names.csv", "w") as file:
     words_writer = csv.writer(file)
     words_writer.writerow(["Artists"])
     for i in range(len(artists)):
