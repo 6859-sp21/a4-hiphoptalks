@@ -137,7 +137,7 @@
                                 .attr("width", diff - 20)
                                 .attr('opacity', 0)
                                 .on('mouseover', function (d, i) {
-                                    d3.select(rapperCircles[rapper]).transition()
+                                    circle.transition()
                                         .duration('250')
                                         .attr('opacity', '.5');
                                     let usesHTML = "";
@@ -155,7 +155,7 @@
                                     artistimg.attr('src', rapperPics[rapper]);
                                 })
                                 .on('mouseout', function (d, i) {
-                                    d3.select(rapperCircles[rapper]).transition()
+                                    circle.transition()
                                         .duration('500')
                                         .attr('opacity', '1');	
                                 });
