@@ -129,9 +129,15 @@
                                 .attr("y", 40 + diff*(i%10)-20)
                                 .attr("height", diff - 20)
                                 .attr("width", diff - 20)
-                                .attr("xlink:href", rapperPics[rapper])
+                                .attr("xlink:href", rapperPics[rapper]);
+                            svg.append("rect")
+                                .attr("x", 40 + diff*Math.floor(i/10)-20)
+                                .attr("y", 40 + diff*(i%10)-20)
+                                .attr("height", diff - 20)
+                                .attr("width", diff - 20)
+                                .attr('opacity', 0)
                                 .on('mouseover', function (d, i) {
-                                    d3.select(this).transition()
+                                    d3.select(circle).transition()
                                         .duration('250')
                                         .attr('opacity', '.5');
                                     let usesHTML = "";
@@ -149,7 +155,7 @@
                                     artistimg.attr('src', rapperPics[rapper]);
                                 })
                                 .on('mouseout', function (d, i) {
-                                    d3.select(this).transition()
+                                    d3.select(circle).transition()
                                         .duration('500')
                                         .attr('opacity', '1');	
                                 });
