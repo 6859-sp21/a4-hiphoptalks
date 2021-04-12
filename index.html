@@ -8,29 +8,29 @@
             #title {color: black; font-size: max(5vmin, 50px);}
             #subtitle {color: black; font-size: max(2vmin, 15px); vertical-align: top;}
 
-            #wordchoice {position: absolute; left: 50%; top: -20%; transform: translate(-50%, 0%);}
+            #wordchoice {position: absolute; left: 50%; top: -15%; transform: translate(0%, 0%);}
             input {height: 3vmin; width: 30vmin; border-radius: 10px; outline: none; border: 0px; background: white; font-family: monospace; padding: 10px 20px; font-size: 24px; margin: 20px 10px 20px 0; color: black; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
-            #noword {text-align: center; color: black; width: 50vmin; position: absolute; left: 50%; top: 7.5vmin; transform: translate(-50%, 0%); font-size: max(1.5vmin, 10px); }
+            #noword {text-align: center; color: black; width: 50vmin; position: absolute; left: 50%; top: 7vmin; transform: translate(-50%, 0%); font-size: max(1.5vmin, 10px); }
             
-            #viz {background-color: white; width: 50vmin; height: 50vmin; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 15px; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
+            #viz {background-color: white; width: 65vmin; height: 65vmin; position: absolute; left: 50%; top: 50%; transform: translate(-75%, -40%); border-radius: 15px; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
 
-            #extrainfo {width: 50vmin; height: 50vmin; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
+            #extrainfo {width: 65vmin; height: 65vmin; position: absolute; left: 50%; top: 50%; transform: translate(-75%, -40%);}
 
             #disclaimer {text-align: center; position: absolute; width: 40vmin; left: 50%; top: 100%; transform: translate(-50%, 25%);}
 
-            #wordrank {background-color: white; width: 20vmin; height: 35vmin; position: absolute; left: 100%; bottom: 0%; transform: translate(15%, 0%); border-radius: 15px; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
-            #vocabheader {position: absolute; top: 15px; width: 20vmin; text-align: center; font-size: max(2vmin, 15px); font-weight: bold; font-family: sans-serif;}
-            #vocabsubheader {position: absolute; top: 40px; width: 15vmin; left: 50%; transform: translate(-50%, 0%); text-align: center; font-size: max(1vmin, 5px); font-family: sans-serif;}
-            #vocabulary {list-style: none; position: absolute; left: 15px; bottom: 15px; width: 19vmin; height: 27.5vmin; overflow-y: auto; overflow-x: none; -ms-overflow-style: none; scrollbar-width: none;}
-            #vocabulary::-webkit-scrollbar {
+            #wordrank {background-color: white; width: 30vmin; height: 45vmin; position: absolute; left: 100%; bottom: 0%; transform: translate(15%, 0%); border-radius: 15px; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
+            #vocabheader {position: absolute; top: 15px; width: 30vmin; text-align: center; font-size: max(2vmin, 15px); font-weight: bold; font-family: sans-serif;}
+            #vocabsubheader {position: absolute; top: 40px; width: 30vmin; left: 50%; transform: translate(-50%, 0%); text-align: center; font-size: max(1vmin, 5px); font-family: sans-serif;}
+            #vocabulary {list-style: none; position: absolute; left: 15px; bottom: 15px; width: 27.5vmin; height: 38.5vmin; overflow-y: auto; overflow-x: none; }
+            /* #vocabulary::-webkit-scrollbar {
                 display: none;
-            }
-            #vocabulary > li {padding-left: .5vmin; padding-top: .25vmin; width: 19vmin; font-size: max(1.5vmin, 10px); font-family: sans-serif; font-weight: bold;}
+            } */
+            #vocabulary > li {border-radius: 10px; background-color: #eeeeee; padding: 1vmin; margin-left: 1.875vmin; margin-top: 1vmin; width: 20vmin; font-size: max(1.5vmin, 10px); font-family: sans-serif; font-weight: bold;}
 
-            #artistinfo {text-align: center; background-color: white; width: 20vmin; height: 12.5vmin; position: absolute; left: 100%; top: 0%; transform: translate(15%, 0%); border-radius: 15px; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
+            #artistinfo {text-align: center; background-color: white; width: 30vmin; height: 17.5vmin; position: absolute; left: 100%; top: 0%; transform: translate(15%, 0%); border-radius: 15px; box-shadow: 0 0 25px 5px rgba(0,0,0,.15);}
             #artistimg {position:absolute; left: 15px; top: 15px; height: max(2vmin, 50px); width: max(2vmin, 50px);}
             #artistname {position: absolute; left: 80px; top: 45px; text-align: left; font-size: max(1.5vmin, 10px); font-weight: bold; font-family: sans-serif;}
-            #artistuses {position: absolute; width: 17vmin; left: 15px; top: 85px; text-align: left; font-size: max(1.5vmin, 10px); font-family: sans-serif;}
+            #artistuses {white-space: pre; position: absolute; width: 27vmin; left: 15px; top: 85px; text-align: left; font-size: max(1.5vmin, 10px); font-family: sans-serif;}
         </style>
     </head>
     <body>
@@ -39,7 +39,7 @@
             <p id="subtitle">An analysis of the most common words used in Hip Hop.</p>
         </div>
         <div id="extrainfo">
-            <form id="wordchoice" name="wordchoice" onkeyup="handleType()">
+            <form id="wordchoice" name="wordchoice" onkeyup="handleType()" onsubmit="()=>{e.preventDefault()}">
                 <input type="text" id="wordtype" placeholder="Type out a word&hellip;">
                 <div id="noword">This word is not one of the 1500 most used words in Hip Hop.</div>
             </form>
@@ -54,7 +54,10 @@
                 <div id="vocabsubheader">(highest to lowest)</div>
                 <div id="vocabulary"></div>
             </div>
-            <div id="disclaimer">Compiled by taking the top 50 songs per artist on Genius.com.<br/>Data slightly skewed due to artist features on records.</div>
+            <div id="disclaimer">Compiled by taking the top 50 songs per artist on Genius.com.
+                <br/>Data slightly skewed due to artist features on records.
+                <br/>Some articles removed such as "a" or "the".
+            </div>
         </div>
         <div id="viz"></div>
         <script src="https://d3js.org/d3.v6.min.js"></script>
@@ -69,6 +72,7 @@
 
             var rappers=[]; // in the form [rapper1, rapper2, rapper3 ...]
             var rapWords={}; // in the form {word: {rapper1: count, rapper2: count ...} ...}
+            var topWords={}; // in the form {rapper1: [word1, word2, word3], rapper2: ...}
             var rapperColors={}; // in the form {rapper1: blue, rapper2: red, ...}
             var rapperPics={}; // in the form {rapper1: pic1, rapper2: pic2, ...}
             var rapperImages={};
@@ -95,89 +99,103 @@
             }).then(() => {
                 // Read through all the words data
                 console.log(rappers);
-                d3.csv("words.csv", function(data) {
-                    let word = data["Words"];
-                    rapWords[word] = {};
-                    for (var i = 0; i < rappers.length; i++) {
-                        let rapper = rappers[i];
-                        rapWords[word][rapper] = parseInt(data[rapper]);
-                    }
+                d3.csv("topwords.csv", function(data) {
+                    let rapper = data["Artists"];
+                    let word1 = data["Word1"];
+                    let word2 = data["Word2"];
+                    let word3 = data["Word3"];
+                    topWords[rapper] = [word1, word2, word3];
                 }).then(() => {
-                    for (var i = 0; i < rappers.length; i++) {
-                        let rapper = rappers[i];
-                        let minDim = Math.min(height, width);
-                        let diff = (minDim - 80)/9;
-                        let svgWidth = .25*document.body.clientWidth;
-                        let svgHeight = .25*document.body.clientHeight;
-                        let x = 40 + diff*Math.floor(i/10)-20;
-                        let y = 40 + diff*(i%10)-20;
-
-                        let circle = svg.append("image")
-                            .attr("x", 40 + diff*Math.floor(i/10)-20)
-                            .attr("y", 40 + diff*(i%10)-20)
-                            .attr("height", diff - 20)
-                            .attr("width", diff - 20)
-                            .attr("xlink:href", rapperPics[rapper])
-                            .on('mouseover', function (d, i) {
-                                d3.select(this).transition()
-                                    .duration('250')
-                                    .attr('opacity', '.5');
-                                if (currentWord != "") {
-                                    let numUses = rapWords[currentWord][rapper];
-                                    let usesText = "\" " + numUses + " times.";
-                                    artistuses.html("Has used \"" + currentWord + usesText);
-                                } else {
-                                    artistuses.html("No valid word currently entered.");
-                                }
-                                artistname.html(rapper);
-                                artistimg.attr('src', rapperPics[rapper]);
-                            })
-                            .on('mouseout', function (d, i) {
-                                d3.select(this).transition()
-                                    .duration('500')
-                                    .attr('opacity', '1');	
-                            });
-
-                        rapperCircles[rapper] = circle;
-                    }
-
-                    artistuses.html("No valid word currently entered.");
-                    artistname.html(rappers[0]);
-                    artistimg.attr('src', rapperPics[rappers[0]]);
-
-                    // Generate the word sums list
-                    let wordsums = {}
-                    let vocabwords = []
-                    d3.csv("wordsums.csv", function(data) {
-                        let rapper = data["Artists"];
-                        rappers.push(rapper);
-                        rapperPics[rapper] = data["Pictures"];
+                    d3.csv("words.csv", function(data) {
                         let word = data["Words"];
-                        let count = data["Count"];
-                        wordsums[word] = count;
-                        vocabwords.push(word);
+                        rapWords[word] = {};
+                        for (var i = 0; i < rappers.length; i++) {
+                            let rapper = rappers[i];
+                            rapWords[word][rapper] = parseInt(data[rapper]);
+                        }
                     }).then(() => {
-                        vocabwords.sort((a,b) => {return wordsums[b] - wordsums[a]});
-                        for (var i = 0; i < vocabwords.length; i++) {
-                            let word = vocabwords[i];
-                            vocabulary.append("li")
-                                .html("#" + (i+1) + " \"" + word + "\" <span style=\"font-size: max(1.5vmin, 10px); font-weight: normal;\">(" + wordsums[word] + " uses)</span>")
+                        for (var i = 0; i < rappers.length; i++) {
+                            let rapper = rappers[i];
+                            let minDim = Math.min(height, width);
+                            let diff = (minDim - 80)/9;
+                            let svgWidth = .25*document.body.clientWidth;
+                            let svgHeight = .25*document.body.clientHeight;
+                            let x = 40 + diff*Math.floor(i/10)-20;
+                            let y = 40 + diff*(i%10)-20;
+
+                            let circle = svg.append("image")
+                                .attr("x", 40 + diff*Math.floor(i/10)-20)
+                                .attr("y", 40 + diff*(i%10)-20)
+                                .attr("height", diff - 20)
+                                .attr("width", diff - 20)
+                                .attr("xlink:href", rapperPics[rapper])
                                 .on('mouseover', function (d, i) {
-                                    console.log("HELKJPWOEIJF");
-                                    console.log(d3.select(this));
                                     d3.select(this).transition()
-                                        .style('opacity', '.5');
+                                        .duration('250')
+                                        .attr('opacity', '.5');
+                                    let usesHTML = "";
+                                    if (currentWord != "") {
+                                        let numUses = rapWords[currentWord][rapper];
+                                        let usesText = "\" " + numUses + " times.";
+                                        usesHTML += "Has used \"" + currentWord + usesText;
+                                    } else {
+                                        usesHTML += "No valid word currently entered.";
+                                    }
+                                    let topWordsText = "</br><span style=\"font-weight: bolder;\">Top Words</span></br>\t\""+topWords[rapper][0]+"\" ("+rapWords[topWords[rapper][0]][rapper]+" uses)</br>\t\""+topWords[rapper][1]+"\" ("+rapWords[topWords[rapper][1]][rapper]+" uses)</br>\t\""+topWords[rapper][2]+"\" ("+rapWords[topWords[rapper][2]][rapper]+" uses)";
+                                    usesHTML += topWordsText;
+                                    artistuses.html(usesHTML);
+                                    artistname.html(rapper);
+                                    artistimg.attr('src', rapperPics[rapper]);
                                 })
                                 .on('mouseout', function (d, i) {
                                     d3.select(this).transition()
-                                        .style('opacity', '1');	
-                                })
-                                .on('click', function (d, i) {
-                                    console.log("clicked" + word);
-                                    document.getElementById("wordtype").value = word;
-                                    checkWord(word);
+                                        .duration('500')
+                                        .attr('opacity', '1');	
                                 });
+
+                            rapperCircles[rapper] = circle;
                         }
+
+                        let firstrapper = rappers[0];
+                        let firstTopWordsText = "</br><span style=\"font-weight: bolder;\">Top Words</span></br>\t\""+topWords[firstrapper][0]+"\" ("+rapWords[topWords[firstrapper][0]][firstrapper]+"uses)</br>\t\""+topWords[firstrapper][1]+"\" ("+rapWords[topWords[firstrapper][1]][firstrapper]+"uses)</br>\t\""+topWords[firstrapper][2]+"\" ("+rapWords[topWords[firstrapper][2]][firstrapper]+"uses";
+                        artistuses.html("No valid word currently entered." + firstTopWordsText);
+                        artistname.html(firstrapper);
+                        artistimg.attr('src', rapperPics[rappers[0]]);
+
+                        // Generate the word sums list
+                        let wordsums = {}
+                        let vocabwords = []
+                        d3.csv("wordsums.csv", function(data) {
+                            let rapper = data["Artists"];
+                            rappers.push(rapper);
+                            rapperPics[rapper] = data["Pictures"];
+                            let word = data["Words"];
+                            let count = data["Count"];
+                            wordsums[word] = count;
+                            vocabwords.push(word);
+                        }).then(() => {
+                            vocabwords.sort((a,b) => {return wordsums[b] - wordsums[a]});
+                            for (var i = 0; i < vocabwords.length; i++) {
+                                let word = vocabwords[i];
+                                vocabulary.append("li")
+                                    .html("#" + (i+1) + " \"" + word + "\" <span style=\"font-size: max(1.5vmin, 10px); font-weight: normal;\">(" + wordsums[word] + " uses)</span>")
+                                    .on('mouseover', function (d, i) {
+                                        console.log("HELKJPWOEIJF");
+                                        console.log(d3.select(this));
+                                        d3.select(this).transition()
+                                            .style('opacity', '.5');
+                                    })
+                                    .on('mouseout', function (d, i) {
+                                        d3.select(this).transition()
+                                            .style('opacity', '1');	
+                                    })
+                                    .on('click', function (d, i) {
+                                        console.log("clicked" + word);
+                                        document.getElementById("wordtype").value = word;
+                                        checkWord(word);
+                                    });
+                            }
+                        });
                     });
                 });
             });
@@ -228,7 +246,7 @@
                 }
 
                 // Initialize all bins
-                let numBins = 10;
+                let numBins = 25;
                 let binSize = Math.round(maxWordCount/numBins);
                 let rapperBins = {};
                 // Using images
@@ -238,7 +256,7 @@
                     let rapper = rappers[i];
                     if (rapper != undefined) {
                         let bin = Math.round(rapWords[word][rapper]/binSize);
-                        let radius = diff-40 + bin/10*40;
+                        let radius = diff-40 + bin/numBins*40;
                         rapperCircles[rapper].transition()
                             .duration(1500)
                             .attr("x", 40 + diff*Math.floor(i/10)-radius/2)
