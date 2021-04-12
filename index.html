@@ -254,8 +254,9 @@
 
                 // Initialize all bins
                 let numBins = 25;
-                let binSize = Math.round(maxWordCount/numBins);
+                let binSize = maxWordCount/numBins;
                 let rapperBins = {};
+
                 // Using images
                 let minDim = Math.min(height, width);
                 let diff = (minDim - 80)/9;
